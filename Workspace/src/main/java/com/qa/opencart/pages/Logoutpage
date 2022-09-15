@@ -1,0 +1,4 @@
+Package Workspace;
+Public void LogoutPage(){
+system.out.println("LogoutPage");
+}
