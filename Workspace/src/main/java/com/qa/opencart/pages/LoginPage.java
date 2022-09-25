@@ -17,10 +17,10 @@ public class LoginPage {
 	private ElementUtils elementUtil;
 	
 	//1. By Locator / OR
-	private By username = By.id("input-email");
-	private By password = By.id("input-password");
-	private By loginButton = By.cssSelector("input[value = 'Login']");
-	private By ForgotPwdLink = By.cssSelector("div.form-group a");
+	private By username = By.cssSelector("#input-email");
+	private By password = By.cssSelector("#input-password");
+	private By loginButton = By.cssSelector("button[type= 'submit']");
+	private By ForgotPwdLink = By.xpath("(//div[@class='mb-3'])[2]/a");
 	private By registerLink = By.linkText("Register");
 	
 	//2. Constructor of page class:
@@ -34,7 +34,7 @@ public class LoginPage {
 	@Step("get Login Page Title")
 	public String getLoginPageTitle() {
 		LOGGER.info("getting page title");
-		return elementUtil.waitForPageTitlePresent(Constants.LOGIN_PAGE_TITLE, 5);
+		return elementUtil.waitForPageTitlePresent(Constants.LOGIN_PAGE_TITLE,5);
 	}
 	
 	@Step("checking is Forgot Pwd Link Exist")

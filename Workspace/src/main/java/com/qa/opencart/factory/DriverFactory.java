@@ -29,12 +29,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
  */
 public class DriverFactory {
 	private static final Logger LOGGER = Logger.getLogger(String.valueOf(DriverFactory.class));
-
 	WebDriver driver;
 	Properties prop;
 	public static String highlight;
 	OptionsManager optionsManager;
-
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 
 	/**
@@ -51,13 +49,15 @@ public class DriverFactory {
 		
 		highlight = prop.getProperty("highlight").trim();
 		optionsManager = new OptionsManager(prop);
-
 		if (browserName.equals("chrome")) {
-
 			LOGGER.info("setup chrome browser");
-			WebDriverManager.chromedriver().setup();
+//           	WebDriverManager.chromedriver().setup();
+			 System.setProperty("webdriver.chrome.driver","D:\\Workspace\\Chromedriver\\chromedriver.exe");
+			      WebDriver driver = new ChromeDriver();
+			      
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				init_remoteDriver("chrome", browserVersion);
+				
 			} else {
 				tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
 			}
@@ -142,7 +142,7 @@ public class DriverFactory {
 
 		if (env == null) {
 			try {
-				ip = new FileInputStream("./src/test/resources/config/config.properties");
+				ip = new FileInputStream("./src/test/source/config/config.properties");
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -187,12 +187,12 @@ public class DriverFactory {
 	 * take sceenshot Ashot
 	 */
 	public String getScreenshot() {
-		String src = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BASE64);
-		File srcFile = new File(src);
+		File src = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+//		File srcFile = new File(src);
 		String path = System.getProperty("user.dir") + "/screenshots/" + System.currentTimeMillis() + ".png";
 		File destination = new File(path);
 		try {
-			FileUtils.copyFile(srcFile, destination);
+			FileUtils.copyFile(src, destination);
 		} catch (IOException e) {
 			LOGGER.error("some exception is coming while creating the screenshot");
 			e.printStackTrace();

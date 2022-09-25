@@ -17,7 +17,7 @@ public class BaseTest {
 	
 	DriverFactory df;
 	public Properties prop;
-	WebDriver driver;
+	public WebDriver driver;
 	public LoginPage loginPage;
 	public AccountPage accountsPage;
 	public ProductInfoPage productInfoPage;
@@ -29,21 +29,18 @@ public class BaseTest {
 	public void setUp(String browserName, String browserVersion) {
 		df = new DriverFactory();
 		prop = df.init_prop();
-		String browser = prop.getProperty("browser");	
+		String browser = prop.getProperty("browser");	 
 		if(browserName !=null) {
 			browser = browserName;
 		}
 		driver = df.init_driver(browser, browserVersion);
 		driver.get(prop.getProperty("url"));
-		loginPage = new LoginPage(driver);
-		
+		loginPage = new LoginPage(driver);	
 	}
 	
 	@AfterTest
 	public void tearDown() {
 		driver.quit();
-	}
-
-	
+	}	
 
 }
